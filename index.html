@@ -12,7 +12,26 @@
 <div class="dashboard">
 
 <h2>📊 Student Dashboard</h2>
+<div class="progressBox">
 
+<h2>📈 My Progress</h2>
+
+<p>
+📝 Quiz Created:
+<span id="quizCountShow">0</span>
+</p>
+
+<p>
+📚 Notes Created:
+<span id="notesCountShow">0</span>
+</p>
+
+<p>
+📄 Exam Papers:
+<span id="examCountShow">0</span>
+</p>
+
+</div>
 <div class="card">
 👤 Profile
 <p id="dashProfile">
@@ -186,6 +205,47 @@ Favourite Answer इथे दिसेल.
 
 
 <script>
+   // Progress Counter
+
+function updateProgress(type){
+
+
+let count =
+localStorage.getItem(type) || 0;
+
+
+count++;
+
+
+localStorage.setItem(type,count);
+
+
+}
+
+
+
+function showProgress(){
+
+
+document.getElementById("quizCountShow").innerHTML =
+localStorage.getItem("quizCreated") || 0;
+
+
+document.getElementById("notesCountShow").innerHTML =
+localStorage.getItem("notesCreated") || 0;
+
+
+document.getElementById("examCountShow").innerHTML =
+localStorage.getItem("examCreated") || 0;
+
+
+}
+
+
+window.addEventListener(
+"load",
+showProgress
+); 
   function loadDashboard(){
 
 
@@ -264,9 +324,7 @@ question:
 
 })
 
-});
-
-
+updateProgress("examCreated");
 let data = await response.json();
 
 
@@ -312,7 +370,7 @@ question:
 })
 
 });
-
+updateProgress("notesCreated");
 
 let data = await response.json();
 
@@ -637,7 +695,7 @@ question:
 
 });
 
-
+updateProgress("quizCreated");
 let data = await response.json();
 
 
