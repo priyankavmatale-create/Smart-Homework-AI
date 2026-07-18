@@ -290,3 +290,97 @@ body.dark .subjects button {
     border-color:#00c6ff;
 
 }
+
+/* Student Dashboard */
+
+.dashboard {
+
+    margin:20px auto;
+    padding:20px;
+    width:85%;
+    background:white;
+    border-radius:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+
+}
+
+
+.dashboard h2 {
+
+    text-align:center;
+    color:#6c63ff;
+
+}
+
+
+.card {
+
+    background:linear-gradient(135deg,#f5f7ff,#ffffff);
+    margin:15px 0;
+    padding:15px;
+    border-radius:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+
+    font-size:16px;
+
+}
+
+
+.card p {
+
+    text-align:left;
+    color:#555;
+
+}
+
+
+
+/* Dark Mode Dashboard */
+
+body.dark .dashboard {
+
+    background:#111827;
+
+}
+
+
+body.dark .dashboard h2 {
+
+    color:#00c6ff;
+
+}
+
+
+body.dark .card {
+
+    background:#1f2937;
+    color:white;
+
+}
+
+
+body.dark .card p {
+
+    color:#ddd;
+
+}
+
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+.dashboard{
+
+width:90%;
+
+}
+
+.card{
+
+font-size:14px;
+
+}
+
+}
