@@ -70,7 +70,27 @@
 <div class="notesBox">
 
 <h2>📚 AI Notes Generator</h2>
+<div class="examBox">
 
+<h2>📝 AI Exam Paper Generator</h2>
+
+<input id="examSubject" placeholder="Enter Subject">
+
+<select id="examQuestions">
+<option>10 Questions</option>
+<option>20 Questions</option>
+<option>30 Questions</option>
+</select>
+
+<button onclick="generateExam()">
+📝 Generate Paper
+</button>
+
+<div id="examResult">
+Exam paper इथे दिसेल.
+</div>
+
+</div>
 <input id="notesTopic" placeholder="Enter topic">
 
 <button onclick="generateNotes()">
@@ -125,6 +145,56 @@ Favourite Answer इथे दिसेल.
 
 
 <script>
+    async function generateExam(){
+
+let subject =
+document.getElementById("examSubject").value;
+
+let questions =
+document.getElementById("examQuestions").value;
+
+
+if(subject.trim()==""){
+
+alert("Subject लिहा");
+
+return;
+
+}
+
+
+document.getElementById("examResult").innerHTML =
+"Exam paper तयार होत आहे... ⏳";
+
+
+let response = await fetch(
+"https://smart-homework-ai-ef6l.onrender.com/ask",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+question:
+"Create a practice exam paper for "+subject+" with "+questions+" and answers"
+
+})
+
+});
+
+
+let data = await response.json();
+
+
+document.getElementById("examResult").innerHTML =
+data.answer;
+
+
+}
     async function generateNotes(){
 
 let topic =
