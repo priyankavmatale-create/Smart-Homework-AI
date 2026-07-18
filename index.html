@@ -56,11 +56,22 @@ Answer इथे दिसेल.
 <button onclick="copyAnswer()">
 Copy Answer
 </button>
+<button onclick="saveFavourite()">
+⭐ Save Favourite
+</button>
+
+<div id="favouriteBox">
+Favourite Answer इथे दिसेल.
+</div>
+
+<button onclick="showFavourite()">
+📌 Show Favourite
+</button>
 
 
 
 <script>
-
+    
 
 // Subject buttons
 
@@ -255,9 +266,43 @@ alert("Answer copied!");
 
 }
 
+function saveFavourite(){
 
+let answer =
+document.getElementById("answer").innerText;
+
+localStorage.setItem(
+"favouriteAnswer",
+answer
+);
+
+alert("⭐ Favourite Answer Saved!");
+
+}
+
+
+
+function showFavourite(){
+
+let favourite =
+localStorage.getItem("favouriteAnswer");
+
+
+if(favourite){
+
+document.getElementById("favouriteBox").innerHTML =
+favourite;
+
+}
+
+else{
+
+alert("No Favourite Answer Saved");
+
+}
+
+}
 </script>
-
 
 </body>
 
