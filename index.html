@@ -64,7 +64,25 @@
 
 
 <textarea id="question" placeholder="तुमचा प्रश्न इथे लिहा..."></textarea>
+<div class="quizBox">
 
+<h2>📝 AI Quiz Generator</h2>
+
+<input id="quizTopic" placeholder="Enter topic (Maths, Science...)">
+
+<select id="quizCount">
+<option>5 Questions</option>
+<option>10 Questions</option>
+<option>15 Questions</option>
+</select>
+
+<button onclick="generateQuiz()">
+🤖 Generate Quiz
+</button>
+
+<div id="quizResult"></div>
+
+</div>
 
 <button onclick="getAnswer()">
 Get Answer
@@ -90,7 +108,6 @@ Favourite Answer इथे दिसेल.
 <button onclick="showFavourite()">
 📌 Show Favourite
 </button>
-
 
 
 <script>
@@ -368,6 +385,54 @@ else{
 alert("No Favourite Answer Saved");
 
 }
+
+}
+async function generateQuiz(){
+
+let topic = document.getElementById("quizTopic").value;
+
+let count = document.getElementById("quizCount").value;
+
+
+if(topic.trim()==""){
+
+alert("Topic लिहा");
+
+return;
+
+}
+
+
+document.getElementById("quizResult").innerHTML =
+"Quiz तयार होत आहे... ⏳";
+
+
+let response = await fetch(
+"https://smart-homework-ai-ef6l.onrender.com/ask",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+question:
+"Create a "+count+" quiz on "+topic+" with answers"
+
+})
+
+});
+
+
+let data = await response.json();
+
+
+document.getElementById("quizResult").innerHTML =
+data.answer;
+
 
 }
 </script>
