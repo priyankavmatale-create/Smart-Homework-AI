@@ -9,7 +9,48 @@
 <div class="profile">
 
 <h3>👤 Student Profile</h3>
+<div class="dashboard">
 
+<h2>📊 Student Dashboard</h2>
+
+<div class="card">
+👤 Profile
+<p id="dashProfile">
+No Profile
+</p>
+</div>
+
+
+<div class="card">
+📝 Learning Tools
+
+<p>
+Quiz Generator ✅
+</p>
+
+<p>
+Notes Generator ✅
+</p>
+
+<p>
+Exam Paper Generator ✅
+</p>
+
+</div>
+
+
+<div class="card">
+
+⭐ Favourite Answer
+
+<p id="dashFavourite">
+No Favourite Saved
+</p>
+
+</div>
+
+
+</div>
 <input id="studentName" placeholder="Enter your name">
 
 <select id="studentClass">
@@ -145,6 +186,45 @@ Favourite Answer इथे दिसेल.
 
 
 <script>
+  function loadDashboard(){
+
+
+let name =
+localStorage.getItem("studentName");
+
+let studentClass =
+localStorage.getItem("studentClass");
+
+
+if(name){
+
+document.getElementById("dashProfile").innerHTML =
+name + " (" + studentClass + ")";
+
+}
+
+
+
+let fav =
+localStorage.getItem("favouriteAnswer");
+
+
+if(fav){
+
+document.getElementById("dashFavourite").innerHTML =
+fav;
+
+}
+
+
+}
+
+
+
+window.addEventListener(
+"load",
+loadDashboard
+);  
     async function generateExam(){
 
 let subject =
