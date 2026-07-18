@@ -6,7 +6,30 @@
 <title>Smart Homework AI</title>
 <link rel="stylesheet" href="style.css">
 </head>
+<div class="profile">
 
+<h3>👤 Student Profile</h3>
+
+<input id="studentName" placeholder="Enter your name">
+
+<select id="studentClass">
+
+<option>Class 5</option>
+<option>Class 6</option>
+<option>Class 7</option>
+<option>Class 8</option>
+<option>Class 9</option>
+<option>Class 10</option>
+
+</select>
+
+<button onclick="saveProfile()">
+💾 Save Profile
+</button>
+
+<p id="welcome"></p>
+
+</div>
 <body>
 
 <img src="logo.png" class="logo">
@@ -71,7 +94,52 @@ Favourite Answer इथे दिसेल.
 
 
 <script>
-    
+    function saveProfile(){
+
+let name =
+document.getElementById("studentName").value;
+
+let studentClass =
+document.getElementById("studentClass").value;
+
+
+localStorage.setItem(
+"studentName",
+name
+);
+
+
+localStorage.setItem(
+"studentClass",
+studentClass
+);
+
+
+document.getElementById("welcome").innerHTML =
+"👋 Welcome " + name + " (" + studentClass + ")";
+
+
+}
+
+
+
+window.onload=function(){
+
+let name =
+localStorage.getItem("studentName");
+
+let studentClass =
+localStorage.getItem("studentClass");
+
+
+if(name){
+
+document.getElementById("welcome").innerHTML =
+"👋 Welcome " + name + " (" + studentClass + ")";
+
+}
+
+}
 
 // Subject buttons
 
