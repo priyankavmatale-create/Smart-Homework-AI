@@ -67,7 +67,21 @@
 <div class="quizBox">
 
 <h2>📝 AI Quiz Generator</h2>
+<div class="notesBox">
 
+<h2>📚 AI Notes Generator</h2>
+
+<input id="notesTopic" placeholder="Enter topic">
+
+<button onclick="generateNotes()">
+🤖 Generate Notes
+</button>
+
+<div id="notesResult">
+Notes इथे दिसतील.
+</div>
+
+</div>
 <input id="quizTopic" placeholder="Enter topic (Maths, Science...)">
 
 <select id="quizCount">
@@ -111,6 +125,53 @@ Favourite Answer इथे दिसेल.
 
 
 <script>
+    async function generateNotes(){
+
+let topic =
+document.getElementById("notesTopic").value;
+
+
+if(topic.trim()==""){
+
+alert("Topic लिहा");
+
+return;
+
+}
+
+
+document.getElementById("notesResult").innerHTML =
+"Notes तयार होत आहेत... ⏳";
+
+
+let response = await fetch(
+"https://smart-homework-ai-ef6l.onrender.com/ask",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+question:
+"Create simple student notes on "+topic+" with important points"
+
+})
+
+});
+
+
+let data = await response.json();
+
+
+document.getElementById("notesResult").innerHTML =
+data.answer;
+
+
+}
     function saveProfile(){
 
 let name =
