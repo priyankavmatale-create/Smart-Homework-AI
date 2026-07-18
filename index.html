@@ -7,17 +7,22 @@
 </head>
 
 <body>
+
 <img src="logo.png" class="logo">
 
 <h1>Smart Homework AI 🤖</h1>
 
 <p>Your AI Homework Helper 🚀</p>
+
 <div id="chatBox"></div>
+
 <input type="file" id="pdfFile" accept=".pdf">
 
 <br><br>
 
 <textarea id="question" placeholder="तुमचा प्रश्न इथे लिहा..."></textarea>
+
+<br><br>
 
 <button onclick="getAnswer()">Get Answer</button>
 
@@ -25,15 +30,14 @@
 
 <button onclick="copyAnswer()">Copy Answer</button>
 
+
 <script>
+
 async function getAnswer() {
 
     let question = document.getElementById("question").value;
     let pdf = document.getElementById("pdfFile").files[0];
 
-if(pdf){
-    console.log("PDF Selected:", pdf.name);
-}
     if(question.trim() === "") {
         alert("कृपया प्रश्न लिहा.");
         return;
@@ -47,29 +51,48 @@ if(pdf){
         </div>
     `;
 
-    document.getElementById("answer").innerHTML = "AI विचार करत आहे... ⏳";
-if (pdf) {
 
-    let formData = new FormData();
-    formData.append("pdf", pdf);
+    document.getElementById("answer").innerHTML =
+    "AI विचार करत आहे... ⏳";
 
-    await fetch("http://localhost:3000/upload-pdf", {
+
+    // PDF Upload
+    if(pdf){
+
+        let formData = new FormData();
+
+        formData.append("pdf", pdf);
+
+
+        await fetch(
+        "https://smart-homework-ai-ef6l.onrender.com/upload-pdf",
+        {
+            method: "POST",
+            body: formData
+        });
+
+    }
+
+
+    // Ask AI
+
+    let response = await fetch(
+    "https://smart-homework-ai-ef6l.onrender.com/ask",
+    {
         method: "POST",
-        body: formData
-    });
 
-}
-    let response = await fetch("http://localhost:3000/ask", {
-        method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
+
         body: JSON.stringify({
             question: question
         })
     });
 
+
     let data = await response.json();
+
 
     chatBox.innerHTML += `
         <div class="aiMessage">
@@ -77,14 +100,33 @@ if (pdf) {
         </div>
     `;
 
-    document.getElementById("answer").innerHTML = data.answer;
+
+    document.getElementById("answer").innerHTML =
+    data.answer;
+
 
     document.getElementById("question").value = "";
+
 }
+
+
+
+function copyAnswer(){
+
+    let answer =
+    document.getElementById("answer").innerText;
+
+
+    navigator.clipboard.writeText(answer);
+
+
+    alert("Answer copied!");
+
+}
+
+
 </script>
+
 
 </body>
 </html>
-
-
-   
