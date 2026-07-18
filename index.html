@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <title>Homework AI</title>
+    <title>Smart Homework AI</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -22,11 +23,13 @@
 
 <textarea id="question" placeholder="तुमचा प्रश्न इथे लिहा..."></textarea>
 
-<br><br>
+<br>
 
 <button onclick="getAnswer()">Get Answer</button>
 
-<p id="answer">Answer इथे दिसेल.</p>
+<div id="answer">
+    Answer इथे दिसेल.
+</div>
 
 <button onclick="copyAnswer()">Copy Answer</button>
 
@@ -36,14 +39,21 @@
 async function getAnswer() {
 
     let question = document.getElementById("question").value;
+
     let pdf = document.getElementById("pdfFile").files[0];
 
+
     if(question.trim() === "") {
+
         alert("कृपया प्रश्न लिहा.");
+
         return;
+
     }
 
+
     let chatBox = document.getElementById("chatBox");
+
 
     chatBox.innerHTML += `
         <div class="userMessage">
@@ -57,6 +67,7 @@ async function getAnswer() {
 
 
     // PDF Upload
+
     if(pdf){
 
         let formData = new FormData();
@@ -67,11 +78,15 @@ async function getAnswer() {
         await fetch(
         "https://smart-homework-ai-ef6l.onrender.com/upload-pdf",
         {
-            method: "POST",
-            body: formData
+
+            method:"POST",
+
+            body:formData
+
         });
 
     }
+
 
 
     // Ask AI
@@ -79,30 +94,73 @@ async function getAnswer() {
     let response = await fetch(
     "https://smart-homework-ai-ef6l.onrender.com/ask",
     {
-        method: "POST",
 
-        headers: {
-            "Content-Type": "application/json"
+        method:"POST",
+
+        headers:{
+
+            "Content-Type":"application/json"
+
         },
 
-        body: JSON.stringify({
-            question: question
+        body:JSON.stringify({
+
+            question:question
+
         })
+
     });
+
 
 
     let data = await response.json();
 
 
+    let answerText = data.answer;
+
+
+
     chatBox.innerHTML += `
+
         <div class="aiMessage">
-            ${data.answer}
+
         </div>
+
     `;
 
 
+    let aiBox =
+    chatBox.lastElementChild;
+
+
+
+    aiBox.innerHTML = "";
+
+
+    let i = 0;
+
+
+    function typing(){
+
+        if(i < answerText.length){
+
+            aiBox.innerHTML += answerText.charAt(i);
+
+            i++;
+
+            setTimeout(typing,25);
+
+        }
+
+    }
+
+
+    typing();
+
+
+
     document.getElementById("answer").innerHTML =
-    data.answer;
+    answerText;
 
 
     document.getElementById("question").value = "";
@@ -111,16 +169,18 @@ async function getAnswer() {
 
 
 
+
 function copyAnswer(){
 
-    let answer =
+    let text =
     document.getElementById("answer").innerText;
 
 
-    navigator.clipboard.writeText(answer);
+    navigator.clipboard.writeText(text);
 
 
     alert("Answer copied!");
+
 
 }
 
@@ -129,4 +189,5 @@ function copyAnswer(){
 
 
 </body>
+
 </html>
