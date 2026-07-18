@@ -227,3 +227,66 @@ width:85%;
 
 
 }
+/* Dark Mode */
+
+body.dark {
+
+    background: linear-gradient(135deg,#111827,#1f2937);
+
+    color:white;
+
+}
+
+
+body.dark h1 {
+
+    background:linear-gradient(45deg,#00c6ff,#7b2cff);
+
+}
+
+
+body.dark p {
+
+    color:#ddd;
+
+}
+
+
+body.dark textarea {
+
+    background:#1f2937;
+
+    color:white;
+
+    border-color:#555;
+
+}
+
+
+body.dark #answer {
+
+    background:#111827;
+
+    color:white;
+
+}
+
+
+body.dark .aiMessage {
+
+    background:#1f2937;
+
+    color:white;
+
+}
+
+
+body.dark .subjects button {
+
+    background:#111827;
+
+    color:white;
+
+    border-color:#00c6ff;
+
+}

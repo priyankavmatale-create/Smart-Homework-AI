@@ -12,6 +12,9 @@
 <img src="logo.png" class="logo">
 
 <h1>Smart Homework AI 🤖</h1>
+<button onclick="toggleDarkMode()">
+🌙 Dark Mode
+</button>
 
 <p>Your AI Homework Helper 🚀</p>
 
@@ -69,7 +72,11 @@ Copy Answer
 
 
 <script>
+function toggleDarkMode(){
 
+document.body.classList.toggle("dark");
+
+}
 
 function setSubject(subject){
 
