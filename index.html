@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<img src="logo.png" class="logo">
+
+<h1>Smart Homework AI 🤖</h1>
+
+<p>Your AI Homework Helper 🚀</p>
+<div id="chatBox"></div>
+<input type="file" id="pdfFile" accept=".pdf">
+
+<br><br>
+
+<textarea id="question" placeholder="तुमचा प्रश्न इथे लिहा..."></textarea>
+
+<button onclick="getAnswer()">Get Answer</button>
+
+<p id="answer">Answer इथे दिसेल.</p>
+
+<button onclick="copyAnswer()">Copy Answer</button>
+
+<script>
+async function getAnswer() {
+
+    let question = document.getElementById("question").value;
+    let pdf = document.getElementById("pdfFile").files[0];
+
+if(pdf){
+    console.log("PDF Selected:", pdf.name);
+}
+    if(question.trim() === "") {
+        alert("कृपया प्रश्न लिहा.");
+        return;
+    }
+
+    let chatBox = document.getElementById("chatBox");
+
+    chatBox.innerHTML += `
+        <div class="userMessage">
+            ${question}
+        </div>
+    `;
+
+    document.getElementById("answer").innerHTML = "AI विचार करत आहे... ⏳";
+if (pdf) {
+
+    let formData = new FormData();
+    formData.append("pdf", pdf);
+
+    await fetch("http://localhost:3000/upload-pdf", {
+        method: "POST",
+        body: formData
+    });
+
+}
+    let response = await fetch("http://localhost:3000/ask", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            question: question
+        })
+    });
+
+    let data = await response.json();
+
+    chatBox.innerHTML += `
+        <div class="aiMessage">
+            ${data.answer}
+        </div>
+    `;
+
+    document.getElementById("answer").innerHTML = data.answer;
+
+    document.getElementById("question").value = "";
+}
+</script>
+
+</body>
+</html>
+
+
+   
