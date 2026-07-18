@@ -15,155 +15,237 @@
 
 <p>Your AI Homework Helper 🚀</p>
 
+
+<div class="subjects">
+
+<button onclick="setSubject('Maths')">
+➗ Maths
+</button>
+
+<button onclick="setSubject('Science')">
+🔬 Science
+</button>
+
+<button onclick="setSubject('English')">
+📖 English
+</button>
+
+<button onclick="setSubject('General Knowledge')">
+🌍 GK
+</button>
+
+</div>
+
+
 <div id="chatBox"></div>
+
 
 <input type="file" id="pdfFile" accept=".pdf">
 
+
 <br><br>
+
 
 <textarea id="question" placeholder="तुमचा प्रश्न इथे लिहा..."></textarea>
 
+
 <br>
 
-<button onclick="getAnswer()">Get Answer</button>
+
+<button onclick="getAnswer()">
+Get Answer
+</button>
+
 
 <div id="answer">
-    Answer इथे दिसेल.
+Answer इथे दिसेल.
 </div>
 
-<button onclick="copyAnswer()">Copy Answer</button>
+
+<button onclick="copyAnswer()">
+Copy Answer
+</button>
+
 
 
 <script>
 
-async function getAnswer() {
 
-    let question = document.getElementById("question").value;
+function setSubject(subject){
 
-    let pdf = document.getElementById("pdfFile").files[0];
+document.getElementById("question").value =
+"Help me with " + subject + ": ";
 
+}
 
-    if(question.trim() === "") {
 
-        alert("कृपया प्रश्न लिहा.");
 
-        return;
 
-    }
+async function getAnswer(){
 
 
-    let chatBox = document.getElementById("chatBox");
+let question =
+document.getElementById("question").value;
 
 
-    chatBox.innerHTML += `
-        <div class="userMessage">
-            ${question}
-        </div>
-    `;
+let pdf =
+document.getElementById("pdfFile").files[0];
 
 
-    document.getElementById("answer").innerHTML =
-    "AI विचार करत आहे... ⏳";
 
+if(question.trim()===""){
 
-    // PDF Upload
+alert("कृपया प्रश्न लिहा.");
 
-    if(pdf){
+return;
 
-        let formData = new FormData();
+}
 
-        formData.append("pdf", pdf);
 
 
-        await fetch(
-        "https://smart-homework-ai-ef6l.onrender.com/upload-pdf",
-        {
+let chatBox =
+document.getElementById("chatBox");
 
-            method:"POST",
 
-            body:formData
 
-        });
+chatBox.innerHTML += `
 
-    }
+<div class="userMessage">
 
+${question}
 
+</div>
 
-    // Ask AI
+`;
 
-    let response = await fetch(
-    "https://smart-homework-ai-ef6l.onrender.com/ask",
-    {
 
-        method:"POST",
 
-        headers:{
+document.getElementById("answer").innerHTML =
+"AI विचार करत आहे... ⏳";
 
-            "Content-Type":"application/json"
 
-        },
 
-        body:JSON.stringify({
 
-            question:question
 
-        })
+if(pdf){
 
-    });
 
+let formData = new FormData();
 
 
-    let data = await response.json();
+formData.append("pdf",pdf);
 
 
-    let answerText = data.answer;
 
+await fetch(
+"https://smart-homework-ai-ef6l.onrender.com/upload-pdf",
+{
 
+method:"POST",
 
-    chatBox.innerHTML += `
+body:formData
 
-        <div class="aiMessage">
+});
 
-        </div>
 
-    `;
+}
 
 
-    let aiBox =
-    chatBox.lastElementChild;
 
 
 
-    aiBox.innerHTML = "";
 
 
-    let i = 0;
+let response = await fetch(
 
+"https://smart-homework-ai-ef6l.onrender.com/ask",
 
-    function typing(){
+{
 
-        if(i < answerText.length){
 
-            aiBox.innerHTML += answerText.charAt(i);
+method:"POST",
 
-            i++;
 
-            setTimeout(typing,25);
+headers:{
 
-        }
+"Content-Type":"application/json"
 
-    }
+},
 
 
-    typing();
+body:JSON.stringify({
 
+question:question
 
+})
 
-    document.getElementById("answer").innerHTML =
-    answerText;
 
+}
 
-    document.getElementById("question").value = "";
+);
+
+
+
+
+
+let data = await response.json();
+
+
+
+let answerText=data.answer;
+
+
+
+
+let aiMessage=document.createElement("div");
+
+aiMessage.className="aiMessage";
+
+chatBox.appendChild(aiMessage);
+
+
+
+
+let i=0;
+
+
+
+function typing(){
+
+
+if(i < answerText.length){
+
+
+aiMessage.innerHTML +=
+answerText.charAt(i);
+
+
+i++;
+
+
+setTimeout(typing,25);
+
+
+}
+
+
+}
+
+
+
+typing();
+
+
+
+
+document.getElementById("answer").innerHTML =
+answerText;
+
+
+
+document.getElementById("question").value="";
+
+
 
 }
 
@@ -172,15 +254,15 @@ async function getAnswer() {
 
 function copyAnswer(){
 
-    let text =
-    document.getElementById("answer").innerText;
+
+let text =
+document.getElementById("answer").innerText;
 
 
-    navigator.clipboard.writeText(text);
+navigator.clipboard.writeText(text);
 
 
-    alert("Answer copied!");
-
+alert("Answer copied!");
 
 }
 
